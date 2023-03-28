@@ -11,7 +11,7 @@ using OpenQA.Selenium.Chrome;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class UntitledTestCase
+    public class ContactCreation
     {
         private IWebDriver driver;
         private StringBuilder verificationErrors;
