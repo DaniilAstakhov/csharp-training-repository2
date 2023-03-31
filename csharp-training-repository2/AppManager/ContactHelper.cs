@@ -9,9 +9,46 @@ namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
     {
-
-
         public ContactHelper(ApplicationManager manager) : base(manager) { }
+
+        public ContactHelper Create(ContactData contact)
+        {
+            manager.NavigationHelper.GoToMainPage();
+            InitContactCreation();
+            FillContactForm(contact);
+            SubmitContactCreation();
+            return this;
+        }
+
+        public ContactHelper RemoveContact(int v)
+        {
+            manager.NavigationHelper.GoToMainPage();
+            SelectContact(v);
+            RemoveContactButtonClick();
+            manager.NavigationHelper.AcceptAlertWindow();
+            //Можно будет добавить шаги, если удасться наладить проблему с удалением контактов в учбеном приложении
+            return this;
+        }
+        public ContactHelper ModifyContact(ContactData editContact)
+        {
+            manager.NavigationHelper.GoToMainPage();
+            EditContactButtonClick(1);
+            FillContactForm(editContact);
+            UpdateContact();
+            return this;
+        }
+
+        public ContactHelper UpdateContact()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public ContactHelper EditContactButtonClick(int v)
+        {
+            driver.FindElement(By.XPath("//tr[@name='entry']["+ v +"]//img[@alt='Edit']")).Click();
+            return this;
+        }
 
         public ContactHelper SubmitContactCreation()
         {
@@ -36,14 +73,18 @@ namespace WebAddressbookTests
             return this;
         }
 
-        internal ContactHelper Create(ContactData contact)
+        public ContactHelper RemoveContactButtonClick()
         {
-
-            manager.NavigationHelper.OpenMainPage();
-            InitContactCreation();
-            FillContactForm(new ContactData("Name1", "LastName1"));
-            SubmitContactCreation();
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             return this;
         }
+
+        public ContactHelper SelectContact(int v)
+        {
+            driver.FindElement(By.XPath("//tr[@name='entry']["+ v +"]//*[@type='checkbox']")).Click();
+            return this;
+        }
+
+
     }
 }

@@ -27,9 +27,14 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("home page")).Click(); // Go to home page
         }
 
-        public void OpenMainPage() 
+        public void GoToMainPage() 
         {
             driver.FindElement(By.XPath("//a[.='home']")).Click();
+        }
+
+        public void AcceptAlertWindow()
+        {
+            driver.SwitchTo().Alert().Accept();
         }
     }
 }
