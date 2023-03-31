@@ -11,7 +11,7 @@ namespace WebAddressbookTests
     {
         private string baseURL;
 
-        public NavigationHelper(IWebDriver driver, string baseURL) : base(driver) { }
+        public NavigationHelper(ApplicationManager manager, string baseURL) : base(manager) { this.baseURL = baseURL; }
 
         public void OpenHomePage()
         {
@@ -25,6 +25,11 @@ namespace WebAddressbookTests
         public void ReturnToHomePage()
         {
             driver.FindElement(By.LinkText("home page")).Click(); // Go to home page
+        }
+
+        public void OpenMainPage() 
+        {
+            driver.FindElement(By.XPath("//a[.='home']")).Click();
         }
     }
 }
