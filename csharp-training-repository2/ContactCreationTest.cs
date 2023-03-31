@@ -8,13 +8,13 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            OpenHomePage();
-            Login(new UserData("admin", "secret"));
-            InitContactCreation();
-            FillContactForm(new ContactData("Name1", "LastName1"));
-            SubmitContactCreation();
-            ReturnToHomePage();
-            Logout();
+            navigationHelper.OpenHomePage();
+            loginHelper.Login(new UserData("admin", "secret"));
+            contactHelper.InitContactCreation();
+            contactHelper.FillContactForm(new ContactData("Name1", "LastName1"));
+            contactHelper.SubmitContactCreation();
+            navigationHelper.ReturnToHomePage();
+            loginHelper.Logout();
         }
     }
 }

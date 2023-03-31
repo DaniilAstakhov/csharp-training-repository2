@@ -9,14 +9,14 @@ namespace WebAddressbookTests
         [Test]
         public void GroupCreationTest()
         {
-            OpenHomePage();
-            Login(new UserData("admin", "secret"));
-            GoToGroupsPage();
-            InitGroupCreation();
-            FillGroupForm(new GroupData("aaa", "sss", "ddd"));
-            SubmitGroupCreation();
-            ReturnToGroupsPage();
-            Logout();
+            navigationHelper.OpenHomePage();
+            loginHelper.Login(new UserData("admin", "secret"));
+            navigationHelper.GoToGroupsPage();
+            groupHelper.InitGroupCreation();
+            groupHelper.FillGroupForm(new GroupData("aaa", "sss", "ddd"));
+            groupHelper.SubmitGroupCreation();
+            groupHelper.ReturnToGroupsPage();
+            loginHelper.Logout();
         }
     }
 }
