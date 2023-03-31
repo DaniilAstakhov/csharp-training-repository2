@@ -15,7 +15,7 @@ namespace WebAddressbookTests
         private StringBuilder verificationErrors;
         protected string baseURL;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void SetupTest()
         {
             driver = new ChromeDriver();            
@@ -23,7 +23,7 @@ namespace WebAddressbookTests
             verificationErrors = new StringBuilder();
         }
 
-        [OneTimeTearDown]
+        [TearDown]
         public void TeardownTest()
         {
             try
