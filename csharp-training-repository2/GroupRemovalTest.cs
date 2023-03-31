@@ -4,17 +4,16 @@
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests : TestBase
-    {
+    public class GroupRemovalTests : TestBase
+    {        
         [Test]
-        public void GroupCreationTest()
+        public void GroupRemovalTest1()
         {
             OpenHomePage();
             Login(new UserData("admin", "secret"));
             GoToGroupsPage();
-            InitGroupCreation();
-            FillGroupForm(new GroupData("aaa", "sss", "ddd"));
-            SubmitGroupCreation();
+            SelectGroup(1);
+            RemoveGroup();
             ReturnToGroupsPage();
             Logout();
         }
