@@ -3,16 +3,15 @@
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactCreation : TestBase
+    public class ContactCreation : AuthTestBase
     {        
         [Test]
         public void ContactCreationTest()
         {
             ContactData contact = new ContactData("Name1", "LastName1");
 
-            app.ContactHelper.Create(contact);
-            app.NavigationHelper.ReturnToHomePage();
-            app.Auth.Logout();
+            app.ContactHelper.Create(contact);            
+            //app.Auth.Logout();
         }
     }
 }

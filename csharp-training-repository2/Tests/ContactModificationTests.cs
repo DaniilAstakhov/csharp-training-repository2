@@ -3,7 +3,7 @@
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactModificationTests : TestBase
+    public class ContactModificationTests : AuthTestBase
     {
         [Test]
         public void ContactModificationTest()
@@ -11,7 +11,7 @@ namespace WebAddressbookTests
             ContactData editContact = new ContactData("EditName1", "EditLastName1");
 
             app.ContactHelper.ModifyContact(editContact);
-            app.Auth.Logout();
+            //app.Auth.Logout();
         }
     }
 }

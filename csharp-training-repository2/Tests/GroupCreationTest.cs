@@ -4,7 +4,7 @@
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests : TestBase
+    public class GroupCreationTests : AuthTestBase
     {
         [Test]
         public void GroupCreationTest()
@@ -14,9 +14,10 @@ namespace WebAddressbookTests
             group.Footer = "fff";
 
             app.GroupHelper.Create(group);
-            app.Auth.Logout();
+            //app.Auth.Logout();
         }
 
+        [Test]
         public void EmptyGroupCreationTest()
         {
             GroupData group = new GroupData("");
@@ -24,7 +25,7 @@ namespace WebAddressbookTests
             group.Footer = "";
 
             app.GroupHelper.Create(group);
-            app.Auth.Logout();
+            //app.Auth.Logout();
         }
     }
 }
