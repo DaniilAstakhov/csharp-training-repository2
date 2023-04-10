@@ -8,9 +8,16 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
-            ContactData editContact = new ContactData("EditName1", "EditLastName1");
+            int ContactToModify = 1;
 
-            app.ContactHelper.ModifyContact(editContact);
+            ContactData editContact = new ContactData("EditName1", "EditLastName1");            
+
+            if (app.ContactHelper.ChekIfContactDoesNotExist(ContactToModify))
+            {
+                app.ContactHelper.CreateContactsToNuber(ContactToModify);
+            }
+
+            app.ContactHelper.ModifyContact(editContact, ContactToModify);
             //app.Auth.Logout();
         }
     }

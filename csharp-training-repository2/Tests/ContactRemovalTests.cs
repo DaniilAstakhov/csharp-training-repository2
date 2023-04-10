@@ -8,7 +8,14 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            app.ContactHelper.RemoveContact(1);
+            int ContactToDeleteNum = 4;
+
+            if (app.ContactHelper.ChekIfContactDoesNotExist(ContactToDeleteNum))
+            {
+                app.ContactHelper.CreateContactsToNuber(ContactToDeleteNum);
+            }
+
+            app.ContactHelper.RemoveContact(ContactToDeleteNum);
             //app.Auth.Logout();
         }
     }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
@@ -25,8 +26,6 @@ namespace WebAddressbookTests
         public GroupHelper RemoveGroup(int v)
         {
             manager.NavigationHelper.GoToGroupsPage();
-            if (GroupDoesNotExist())
-                Create(new GroupData("ggg"));
             SelectGroup(v);
             RemoveGroupButtonClick();
             ReturnToGroupsPage();
@@ -35,8 +34,6 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.NavigationHelper.GoToGroupsPage();
-            if(GroupDoesNotExist())
-                Create(newData);
             SelectGroup(v);
             InitGroupModification();
             FillGroupForm(newData);
@@ -44,13 +41,32 @@ namespace WebAddressbookTests
             ReturnToGroupsPage();
             return this;
         }
-
-        public bool GroupDoesNotExist()
+        public bool ChekIfGroupDoesNotExist(int groupNum)
         {
-            if (IsElementPresent(By.XPath("//div[@id='content']/form/span/input")))
+            manager.NavigationHelper.GoToGroupsPage();
+            if (IsElementPresent(By.XPath("//div[@id='content']/form/span[" + groupNum + "]/input")))
                 return false;
-            else 
+            else
                 return true;
+        }
+
+        public GroupHelper CreateGroupsToNuber(int groupNum)
+        {
+            manager.NavigationHelper.GoToGroupsPage();
+            int numToAdd = ChekHowManyGroupsNeedToAdd();
+
+            GroupData group = new GroupData("");
+            for (int i = 0; i < groupNum - numToAdd; i++)
+            {
+                Create(group);
+            }
+            return this;
+        }
+
+        public int ChekHowManyGroupsNeedToAdd()
+        {
+            IReadOnlyCollection<IWebElement> numToAdd = driver.FindElements(By.XPath("//div[@id='content']/form/span/input"));
+            return numToAdd.Count();
         }
 
         public GroupHelper SubmitGroupModification()

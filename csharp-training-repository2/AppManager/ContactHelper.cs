@@ -24,10 +24,10 @@ namespace WebAddressbookTests
         public ContactHelper RemoveContact(int v)
         {
             manager.NavigationHelper.GoToMainPage();
-            if (ContactDoesNotExist())
-            {
-                Create(new ContactData("name", "latname"));
-            }
+            //if (ContactDoesNotExist())
+            //{
+            //    Create(new ContactData("name", "latname"));
+            //}
             SelectContact(v);
             RemoveContactButtonClick();
             manager.NavigationHelper.AcceptAlertWindow();
@@ -35,23 +35,38 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public bool ContactDoesNotExist()
-        {
-            if (IsElementPresent(By.XPath("//tr[@name='entry']//*[@type='checkbox']")))            
-                return false;            
-            else            
-                return true;
-            
-        }
-
-        public ContactHelper ModifyContact(ContactData editContact)
+        public ContactHelper CreateContactsToNuber(int contactToDeleteNum)
         {
             manager.NavigationHelper.GoToMainPage();
-            if(ContactDoesNotExist())
+            int numToAdd = ChekHowManyContactsNeedToAdd();
+
+            ContactData contact = new ContactData("", "");
+            for (int i = 0; i < contactToDeleteNum - numToAdd; i++)
             {
-                Create(editContact);
+                Create(contact);
             }
-            EditContactButtonClick(1);
+            return this;
+        }
+
+        public int ChekHowManyContactsNeedToAdd()
+        {
+            IReadOnlyCollection<IWebElement> numToAdd = driver.FindElements(By.XPath("//tr[@name='entry']//*[@type='checkbox']"));
+            return numToAdd.Count();
+        }
+
+        public bool ChekIfContactDoesNotExist(int contactToDeleteNum)
+        {
+            manager.NavigationHelper.GoToMainPage();
+            if (IsElementPresent(By.XPath("//tr[@name='entry'][" + contactToDeleteNum + "]//*[@type='checkbox']")))
+                return false;
+            else
+                return true;
+        }
+
+        public ContactHelper ModifyContact(ContactData editContact, int num)
+        {
+            manager.NavigationHelper.GoToMainPage();
+            EditContactButtonClick(num);
             FillContactForm(editContact);
             UpdateContact();
             return this;
@@ -99,7 +114,5 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("//tr[@name='entry']["+ v +"]//*[@type='checkbox']")).Click();
             return this;
         }
-
-
     }
 }
