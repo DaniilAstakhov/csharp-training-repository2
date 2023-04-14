@@ -24,10 +24,6 @@ namespace WebAddressbookTests
         public ContactHelper RemoveContact(int v)
         {
             manager.NavigationHelper.GoToMainPage();
-            //if (ContactDoesNotExist())
-            //{
-            //    Create(new ContactData("name", "latname"));
-            //}
             SelectContact(v);
             RemoveContactButtonClick();
             manager.NavigationHelper.AcceptAlertWindow();
@@ -113,6 +109,20 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//tr[@name='entry']["+ v +"]//*[@type='checkbox']")).Click();
             return this;
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.NavigationHelper.GoToMainPage();
+            ICollection<IWebElement> names = driver.FindElements(By.XPath("//table[@id='maintable']//tr/td[3]"));
+            ICollection<IWebElement> lastNames = driver.FindElements(By.XPath("//table[@id='maintable']//tr/td[2]"));
+
+            for (int i = 0; i < names.Count; i++)
+            {
+                contacts.Add(new ContactData(names.ElementAt(i).Text, lastNames.ElementAt(i).Text));
+            }
+            return contacts;
         }
     }
 }

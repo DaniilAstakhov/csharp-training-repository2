@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace WebAddressbookTests
 {
@@ -15,7 +16,13 @@ namespace WebAddressbookTests
                 app.ContactHelper.CreateContactsToNuber(ContactToDeleteNum);
             }
 
+            List<ContactData> oldContacts = app.ContactHelper.GetContactList();
+
             app.ContactHelper.RemoveContact(ContactToDeleteNum);
+
+            List<ContactData> newContacts = app.ContactHelper.GetContactList();
+            oldContacts.RemoveAt(ContactToDeleteNum - 1);
+            Assert.AreEqual(oldContacts, newContacts);
             //app.Auth.Logout();
         }
     }

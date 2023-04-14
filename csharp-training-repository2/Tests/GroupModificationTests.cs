@@ -13,7 +13,7 @@ namespace WebAddressbookTests
         [Test]
         public void GroupModificationTest()
         {
-            int groupToModify = 1;
+            int groupToModify = 10;
             
             GroupData newData = new GroupData("zzz");
             newData.Header = null;
@@ -24,7 +24,15 @@ namespace WebAddressbookTests
                 app.GroupHelper.CreateGroupsToNuber(groupToModify);
             }
 
+            List<GroupData> oldGroups = app.GroupHelper.GetGroupList();
+
             app.GroupHelper.Modify(groupToModify, newData);
+
+            List<GroupData> newGroups = app.GroupHelper.GetGroupList();
+            oldGroups[groupToModify - 1].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }

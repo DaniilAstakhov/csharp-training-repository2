@@ -78,7 +78,7 @@
     <Compile Include="Tests\LoginTests.cs" />
     <Compile Include="Tests\TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\GroupCreationTest.cs" />
+    <Compile Include="Tests\GroupCreationTests.cs" />
     <Compile Include="Model\UserData.cs" />
   </ItemGroup>
   <ItemGroup>
