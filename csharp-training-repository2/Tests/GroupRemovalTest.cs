@@ -20,9 +20,17 @@ namespace WebAddressbookTests
 
             app.GroupHelper.RemoveGroup(groupToDeleteNum);
 
+            Assert.AreEqual(oldGroups.Count - 1, app.GroupHelper.GetGroupCount());
+
             List<GroupData> newGroups = app.GroupHelper.GetGroupList();
-            oldGroups.RemoveAt(groupToDeleteNum - 1);
+            GroupData toBeRemoved = oldGroups[groupToDeleteNum - 1];          
+            oldGroups.RemoveAt(groupToDeleteNum - 1);           
             Assert.AreEqual(oldGroups, newGroups);
+
+            foreach (GroupData group in newGroups)
+            {
+                Assert.AreNotEqual(group.Id, toBeRemoved.Id);
+            }    
             //app.Auth.Logout();
         }
     }

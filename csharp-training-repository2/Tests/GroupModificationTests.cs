@@ -28,6 +28,8 @@ namespace WebAddressbookTests
 
             app.GroupHelper.Modify(groupToModify, newData);
 
+            Assert.AreEqual(oldGroups.Count, app.GroupHelper.GetGroupCount());
+
             List<GroupData> newGroups = app.GroupHelper.GetGroupList();
             oldGroups[groupToModify - 1].Name = newData.Name;
             oldGroups.Sort();

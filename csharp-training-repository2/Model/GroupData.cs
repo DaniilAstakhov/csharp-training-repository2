@@ -56,6 +56,7 @@ namespace WebAddressbookTests
         public string Name { get { return name; } set { name = value; } }
 
         public string Header { get { return header; } set { header = value; } }
-        public string Footer { get { return footer; } set { footer = value; } }
+        public string Footer { get { return footer; } set { footer = value; } }        
+        public string Id { get; set; }
     }
 }
