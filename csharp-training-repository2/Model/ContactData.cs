@@ -47,5 +47,7 @@ namespace WebAddressbookTests
         }
         public string Name { get { return name; } set { name = value; } } 
         public string LastName { get { return lastName; } set { lastName = value; } }
+
+        public string id { get; set; }
     }
 }
