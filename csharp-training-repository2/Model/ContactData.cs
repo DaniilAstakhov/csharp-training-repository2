@@ -25,7 +25,7 @@ namespace WebAddressbookTests
             if (Object.ReferenceEquals(this, other))
                 return true;
 
-            return Name == other.Name;
+            return Name == other.Name && LastName == other.LastName;            
         }
 
         public override int GetHashCode()
@@ -35,7 +35,7 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return "name=" + Name;
+            return "name=" + Name + "|" + "lastname=" + LastName;
         }
 
         public int CompareTo(ContactData other)
@@ -43,7 +43,10 @@ namespace WebAddressbookTests
             if (Object.ReferenceEquals(other, null))
                 return 1;
 
-            return Name.CompareTo(other.Name);
+            int result = Name.CompareTo(other.Name);
+            if (result == 0)
+                result = LastName.CompareTo(other.LastName);
+            return result;
         }
         public string Name { get { return name; } set { name = value; } } 
         public string LastName { get { return lastName; } set { lastName = value; } }

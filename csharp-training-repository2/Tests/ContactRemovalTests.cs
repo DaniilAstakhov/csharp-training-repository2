@@ -9,7 +9,7 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            int ContactToDeleteNum = 4;
+            int ContactToDeleteNum = 1;
 
             if (app.ContactHelper.ChekIfContactDoesNotExist(ContactToDeleteNum))
             {
