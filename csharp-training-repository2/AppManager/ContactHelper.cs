@@ -138,5 +138,51 @@ namespace WebAddressbookTests
         {
             return driver.FindElements(By.XPath("//table[@id='maintable']//tr/td[3]")).Count();
         }
+
+        public ContactData GetContactInformationFromTable(int index)
+        {
+            manager.NavigationHelper.GoToMainPage();
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"));
+            string lastName = cells[1].Text;
+            string firstName = cells[2].Text;
+            string address = cells[3].Text;
+            string allPhones = cells[5].Text;
+            string allEMails = cells[4].Text;
+
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                AllPhones = allPhones,
+                AllEMails = allEMails,
+            };
+
+        }
+
+        public ContactData GetContactInformationFromEditForm(int index)
+        {
+            manager.NavigationHelper.GoToMainPage();
+            EditContactButtonClick(index + 1);
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string eMail1 = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string eMail2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string eMail3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                HomePhone = homePhone,
+                WorkPhone = workPhone,
+                MobilePhone = mobilePhone,
+                EMail1 = eMail1,
+                EMail2 = eMail2,
+                EMail3 = eMail3,
+            };
+        }
     }
 }
