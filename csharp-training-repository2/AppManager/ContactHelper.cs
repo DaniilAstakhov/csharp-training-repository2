@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Security.Policy;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace WebAddressbookTests
@@ -183,6 +186,23 @@ namespace WebAddressbookTests
                 EMail2 = eMail2,
                 EMail3 = eMail3,
             };
+        }
+
+        public ContactData GetContactInformationFromInfoForm(int index)
+        {
+            manager.NavigationHelper.GoToMainPage();
+            ContactInformationButtonClick(index + 1);
+            string information = driver.FindElement(By.Id("content")).GetAttribute("textContent");
+            return new ContactData(null, null)
+            {
+                AllData = Regex.Replace(information, "[ M: H: W: ()-]", "").Trim(),
+            };
+        }
+
+        public ContactHelper ContactInformationButtonClick(int v)
+        {
+            driver.FindElement(By.XPath("//tr[@name='entry'][" + v + "]//img[@alt='Details']")).Click();
+            return this;
         }
     }
 }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Security.Policy;
 
 namespace WebAddressbookTests
 {
@@ -13,6 +15,7 @@ namespace WebAddressbookTests
         private string lastName;
         private string allPhones;
         private string allEMails;
+        private string allData;
 
         public ContactData(string name, string lastName) //конструктор для имени и фамилии
         {
@@ -92,7 +95,30 @@ namespace WebAddressbookTests
             if (phone == null || phone == "")
                 return "";
             
-            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
-        }        
+            return Regex.Replace(phone, "[ ()-]", "") + "\r\n";
+        }
+
+        private string SmartCleanUp(string value)
+        {            
+            if (value == null || value == "")
+                return "";
+            return Regex.Replace(value, "[ ()-]", "");
+        }
+
+        public string AllData
+        {
+            get
+            {
+                if (allData != null)
+                {
+                    return allData;
+                }
+                else return SmartCleanUp(Name + LastName + Address + HomePhone + MobilePhone + WorkPhone + EMail1 + EMail2 + EMail3).Trim();
+            }
+            set 
+            { 
+                allData = value; 
+            }    
+        }
     }
 }
