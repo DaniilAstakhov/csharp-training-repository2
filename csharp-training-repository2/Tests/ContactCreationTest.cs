@@ -5,8 +5,18 @@ namespace WebAddressbookTests
 {
     [TestFixture]
     public class ContactCreation : AuthTestBase
-    {        
-        [Test]
+    {
+        public static IEnumerable<ContactData> RandomContactDataProvider()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            for (int i = 0; i < 5; i++)
+            {
+                contacts.Add(new ContactData(GenerateRandomString(6), GenerateRandomString(6)));                
+            }
+            return contacts;
+        }
+
+        [Test, TestCaseSource("RandomContactDataProvider")]
         public void ContactCreationTest()
         {
             ContactData contact = new ContactData("Name1", "LastName1");
