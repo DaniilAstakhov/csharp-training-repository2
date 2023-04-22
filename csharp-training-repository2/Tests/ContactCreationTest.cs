@@ -17,9 +17,9 @@ namespace WebAddressbookTests
         }
 
         [Test, TestCaseSource("RandomContactDataProvider")]
-        public void ContactCreationTest()
+        public void ContactCreationTest(ContactData contact)
         {
-            ContactData contact = new ContactData("Name1", "LastName1");
+            
 
             List<ContactData> oldContacts = app.ContactHelper.GetContactList();
 
