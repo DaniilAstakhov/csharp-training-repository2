@@ -98,11 +98,19 @@ namespace WebAddressbookTests
             return Regex.Replace(phone, "[ ()-]", "") + "\r\n";
         }
 
-        private string SmartCleanUp(string value)
-        {            
+        private string SmartCleanUp(string value, int parameter)
+        {
             if (value == null || value == "")
                 return "";
-            return Regex.Replace(value, "[ ()-]", "");
+                switch (parameter)
+                {
+                    case 1: value = "H: " + value; break;
+                    case 2: value = "M: " + value; break;
+                    case 3: value = "W: " + value; break;
+                    default:
+                        break;  
+                }
+            return value;
         }
 
         public string AllData
@@ -113,7 +121,7 @@ namespace WebAddressbookTests
                 {
                     return allData;
                 }
-                else return SmartCleanUp(Name + LastName + Address + HomePhone + MobilePhone + WorkPhone + EMail1 + EMail2 + EMail3).Trim();
+                else return (Name + " " + LastName + " " + Address + SmartCleanUp(HomePhone , 1) + SmartCleanUp(MobilePhone, 2) + SmartCleanUp(WorkPhone, 3) + " " + EMail1 + EMail2 + EMail3).Trim();
             }
             set 
             { 

@@ -195,7 +195,7 @@ namespace WebAddressbookTests
             string information = driver.FindElement(By.Id("content")).GetAttribute("textContent");
             return new ContactData(null, null)
             {
-                AllData = Regex.Replace(information, "[ M: H: W: ()-]", "").Trim(),
+                AllData = information.Trim(),
             };
         }
 

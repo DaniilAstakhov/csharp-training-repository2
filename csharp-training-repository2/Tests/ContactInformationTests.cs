@@ -28,13 +28,13 @@ namespace WebAddressbookTests
         [Test]
         public void TestContactInformation2()
         {
-            int contactIndex = 0;
-            ContactData fromInfoForm = app.ContactHelper.GetContactInformationFromInfoForm(contactIndex);
-            ContactData fromForm = app.ContactHelper.GetContactInformationFromEditForm(contactIndex);
+                int contactIndex = 2;
+                ContactData fromInfoForm = app.ContactHelper.GetContactInformationFromInfoForm(contactIndex);
+                ContactData fromForm = app.ContactHelper.GetContactInformationFromEditForm(contactIndex);
 
-            // verification
-            //Assert.AreEqual(fromInfoForm, fromForm);
-            Assert.AreEqual(fromInfoForm.AllData, fromForm.AllData);         
+                // verification
+                //Assert.AreEqual(fromInfoForm, fromForm);
+                Assert.AreEqual(fromInfoForm.AllData, fromForm.AllData);
         }
     }
 }
