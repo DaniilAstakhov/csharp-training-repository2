@@ -121,7 +121,7 @@ namespace WebAddressbookTests
                 {
                     return allData;
                 }
-                else return (Name + " " + LastName + " " + Address + SmartCleanUp(HomePhone , 1) + SmartCleanUp(MobilePhone, 2) + SmartCleanUp(WorkPhone, 3) + " " + EMail1 + EMail2 + EMail3).Trim();
+                else return (Name + " " + LastName + "\r\n\r\n" + Address + SmartCleanUp(HomePhone , 1) + "\r\n" + SmartCleanUp(MobilePhone, 2) + "\r\n" + SmartCleanUp(WorkPhone, 3) + "\r\n\r\n" + EMail1 + "\r\n" + EMail2 + "\r\n" + EMail3).Trim();
             }
             set 
             { 

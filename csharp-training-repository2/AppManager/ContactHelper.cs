@@ -192,7 +192,7 @@ namespace WebAddressbookTests
         {
             manager.NavigationHelper.GoToMainPage();
             ContactInformationButtonClick(index + 1);
-            string information = driver.FindElement(By.Id("content")).GetAttribute("textContent");
+            string information = driver.FindElement(By.Id("content")).Text;
             return new ContactData(null, null)
             {
                 AllData = information.Trim(),

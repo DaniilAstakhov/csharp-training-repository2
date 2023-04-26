@@ -28,7 +28,7 @@ namespace WebAddressbookTests
         [Test]
         public void TestContactInformation2()
         {
-                int contactIndex = 2;
+                int contactIndex = 3;
                 ContactData fromInfoForm = app.ContactHelper.GetContactInformationFromInfoForm(contactIndex);
                 ContactData fromForm = app.ContactHelper.GetContactInformationFromEditForm(contactIndex);
 
