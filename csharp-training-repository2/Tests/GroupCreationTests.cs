@@ -1,8 +1,12 @@
 ﻿using NUnit.Framework;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace WebAddressbookTests
 {
@@ -23,7 +27,31 @@ namespace WebAddressbookTests
             return groups;
         }
 
-        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public static IEnumerable<GroupData> GroupDataFromCsvFile()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            string[] lines = File.ReadAllLines(@"groups.csv");
+            foreach (string l in lines)
+            {
+                string[] parts = l.Split(',');
+                groups.Add(new GroupData(parts[0])
+                {
+                    Header = parts[1],
+                    Footer = parts[2]
+                });
+            }    
+            return groups;
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromXmlFile()
+        {
+            return (List<GroupData>) 
+                new XmlSerializer(typeof(GroupData))
+                .Deserialize(new StreamReader(@"groups.xml"));
+        }
+
+
+        [Test, TestCaseSource("GroupDataFromXmlFile")]
         public void GroupCreationTest(GroupData group)
         {            
             List<GroupData> oldGroups = app.GroupHelper.GetGroupList();

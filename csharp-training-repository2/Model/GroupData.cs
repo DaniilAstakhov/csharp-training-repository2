@@ -12,6 +12,9 @@ namespace WebAddressbookTests
         private string header = "";
         private string footer = "";
 
+        public GroupData()
+        {
+        }
         public GroupData(string name) //конструктор только для имени
         {
             this.name = name;
