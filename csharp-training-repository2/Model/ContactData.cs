@@ -17,6 +17,10 @@ namespace WebAddressbookTests
         private string allEMails;
         private string allData;
 
+        public ContactData()
+        {
+
+        }
         public ContactData(string name, string lastName) //конструктор для имени и фамилии
         {
             this.name = name;
