@@ -1,4 +1,5 @@
 ﻿using System;
+using LinqToDB.Mapping;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebAddressbookTests
 {
+    [Table(Name = "group_list")]
     public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
     {
         private string name;
@@ -56,10 +58,24 @@ namespace WebAddressbookTests
             return Name.CompareTo(other.Name);
         }
 
+        [Column(Name = "group_name"), NotNull]
         public string Name { get { return name; } set { name = value; } }
 
+        [Column(Name = "group_header"), NotNull]
         public string Header { get { return header; } set { header = value; } }
-        public string Footer { get { return footer; } set { footer = value; } }        
+
+        [Column(Name = "group_footer"), NotNull]
+        public string Footer { get { return footer; } set { footer = value; } }
+
+        [Column(Name = "group_id"), PrimaryKey, Identity]
         public string Id { get; set; }
+
+        public static List<GroupData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from g in db.Groups select g).ToList();
+            }
+        }
     }
 }

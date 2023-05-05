@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -8,7 +9,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactCreation : AuthTestBase
+    public class ContactCreation : ContactTestBase
     {
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
@@ -35,7 +36,7 @@ namespace WebAddressbookTests
         public static IEnumerable<ContactData> ContactDataFromXmlFile()
         {
             return (List<ContactData>)
-                new XmlSerializer(typeof(ContactData))
+                new XmlSerializer(typeof(List<ContactData>))
                 .Deserialize(new StreamReader(@"contacts.xml"));
         }
         public static IEnumerable<ContactData> ContactDataFromJsonFile()
@@ -65,9 +66,7 @@ namespace WebAddressbookTests
 
         [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void ContactCreationTest(ContactData contact)
-        {
-            
-
+        {            
             List<ContactData> oldContacts = app.ContactHelper.GetContactList();
 
             app.ContactHelper.Create(contact);
@@ -80,6 +79,37 @@ namespace WebAddressbookTests
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
             //app.Auth.Logout();
+        }
+
+        [Test, TestCaseSource("ContactDataFromJsonFile")]
+        public void ContactCreationTest2(ContactData contact)
+        {
+            List<ContactData> oldContacts = ContactData.GetAll();
+
+            app.ContactHelper.Create(contact);
+
+            Assert.AreEqual(oldContacts.Count + 1, app.ContactHelper.GetContacCount());
+
+            List<ContactData> newContacts = ContactData.GetAll();
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
+            //app.Auth.Logout();
+        }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            DateTime start = DateTime.Now;
+            List<ContactData> fromUi = app.ContactHelper.GetContactList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine("UI time " + end.Subtract(start));
+
+            start = DateTime.Now;
+            List<ContactData> fromDb = ContactData.GetAll();
+            end = DateTime.Now;
+            System.Console.Out.WriteLine("DB time " + end.Subtract(start));
         }
     }
 }

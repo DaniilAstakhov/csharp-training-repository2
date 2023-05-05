@@ -31,8 +31,16 @@ namespace WebAddressbookTests
             RemoveContactButtonClick();
             manager.NavigationHelper.AcceptAlertWindow();
             manager.NavigationHelper.GoToMainPage();
-            //Можно будет добавить шаги, если удасться наладить проблему с удалением контактов в учбеном приложении
             return this;
+        }
+
+        public void RemoveContact(ContactData contact)
+        {
+            manager.NavigationHelper.GoToMainPage();
+            SelectContact(contact.id);
+            RemoveContactButtonClick();
+            manager.NavigationHelper.AcceptAlertWindow();
+            manager.NavigationHelper.GoToMainPage();
         }
 
         public ContactHelper CreateContactsToNuber(int contactToDeleteNum)
@@ -73,6 +81,15 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public void ModifyContact(ContactData editContact, ContactData contact)
+        {
+            manager.NavigationHelper.GoToMainPage();
+            EditContactButtonClick(contact.id);
+            FillContactForm(editContact);
+            UpdateContact();
+            manager.NavigationHelper.ReturnToHomePage();
+        }
+
         public ContactHelper UpdateContact()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -83,6 +100,12 @@ namespace WebAddressbookTests
         public ContactHelper EditContactButtonClick(int v)
         {
             driver.FindElement(By.XPath("//tr[@name='entry']["+ v +"]//img[@alt='Edit']")).Click();
+            return this;
+        }
+
+        public ContactHelper EditContactButtonClick(string id)
+        {
+            driver.FindElement(By.XPath("//input[@id='"+id+"']/../..//img[@alt='Edit']")).Click();
             return this;
         }
 
@@ -116,6 +139,12 @@ namespace WebAddressbookTests
         public ContactHelper SelectContact(int v)
         {
             driver.FindElement(By.XPath("//tr[@name='entry']["+ v +"]//*[@type='checkbox']")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(string id)
+        {
+            driver.FindElement(By.XPath("//table[@id='maintable']//input[@id='"+id+"']")).Click();
             return this;
         }
 

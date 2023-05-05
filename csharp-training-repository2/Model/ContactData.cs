@@ -6,9 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Security.Policy;
+using LinqToDB.Mapping;
+using Microsoft.Office.Interop.Excel;
 
 namespace WebAddressbookTests
 {
+    [Table(Name = "addressbook")]
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string name;
@@ -58,16 +61,37 @@ namespace WebAddressbookTests
                 result = LastName.CompareTo(other.LastName);
             return result;
         }
-        public string Name { get { return name; } set { name = value; } } 
+
+        [Column(Name = "firstname"), NotNull]
+        public string Name { get { return name; } set { name = value; } }
+
+        [Column(Name = "lastname"), NotNull]
         public string LastName { get { return lastName; } set { lastName = value; } }
+
+        [Column(Name = "id"), PrimaryKey, Identity]
         public string id { get; set; }
+
+        [Column(Name = "address"), NotNull]
         public string Address { get; set; }
+
+        [Column(Name = "home"), NotNull]
         public string HomePhone { get; set; }
+
+        [Column(Name = "mobile"), NotNull]
         public string MobilePhone { get; set; }
-        public string WorkPhone { get; set; }        
+
+        [Column(Name = "work"), NotNull]
+        public string WorkPhone { get; set; }
+
+        [Column(Name = "email"), NotNull]
         public string EMail1 { get; set; }
+
+        [Column(Name = "email2"), NotNull]
         public string EMail2 { get; set; }
+
+        [Column(Name = "email3"), NotNull]
         public string EMail3 { get; set; }
+
         public string AllPhones 
         {
             get
@@ -131,6 +155,14 @@ namespace WebAddressbookTests
             { 
                 allData = value; 
             }    
+        }
+
+        public static List<ContactData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts select c).ToList();
+            }
         }
     }
 }
