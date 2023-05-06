@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -148,6 +149,11 @@ namespace WebAddressbookTests
             return this;
         }
 
+        private void SelectContactCheckBox(string contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
+        }
+
         private List<ContactData> contactCache = null;
 
         public List<ContactData> GetContactList()
@@ -232,6 +238,52 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//tr[@name='entry'][" + v + "]//img[@alt='Details']")).Click();
             return this;
+        }
+
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.NavigationHelper.GoToMainPage();
+            ClearGroupFilter();
+            SelectContactCheckBox(contact.id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        private void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        private void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        private void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
+        public void RemoveContactFromGroup(ContactData contact, GroupData groupToRemoveFrom)
+        {
+            manager.NavigationHelper.GoToMainPage();
+            SelectGroupInFilter(groupToRemoveFrom);
+            SelectContactCheckBox(contact.id);
+            CommitRemovingContactFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        private void CommitRemovingContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        private void SelectGroupInFilter(GroupData groupToRemoveFrom)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByValue(groupToRemoveFrom.Id);
         }
     }
 }
