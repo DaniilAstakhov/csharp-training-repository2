@@ -49,7 +49,7 @@ namespace WebAddressbookTests
             manager.NavigationHelper.GoToMainPage();
             int numToAdd = ChekHowManyContactsNeedToAdd();
 
-            ContactData contact = new ContactData("", "");
+            ContactData contact = new ContactData("test", "test1");
             for (int i = 0; i < contactToDeleteNum - numToAdd; i++)
             {
                 Create(contact);

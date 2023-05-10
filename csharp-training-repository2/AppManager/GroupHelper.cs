@@ -73,7 +73,7 @@ namespace WebAddressbookTests
             manager.NavigationHelper.GoToGroupsPage();
             int numToAdd = ChekHowManyGroupsNeedToAdd();
 
-            GroupData group = new GroupData("");
+            GroupData group = new GroupData("aaa");
             for (int i = 0; i < groupNum - numToAdd; i++)
             {
                 Create(group);

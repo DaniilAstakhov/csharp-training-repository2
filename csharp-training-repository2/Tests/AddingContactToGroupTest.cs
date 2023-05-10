@@ -12,9 +12,35 @@ namespace WebAddressbookTests
         [Test]
         public void TestAddingContactToGroup()
         {
+            if (GroupData.GetAll().Count == 0)
+            {
+                app.GroupHelper.CreateGroupsToNuber(1);
+            }
+
             GroupData group = GroupData.GetAll()[0];
-            List<ContactData> oldList = group.GetContacts();
-            ContactData contact = ContactData.GetAll().Except(oldList).First();
+
+            ContactData contact = new ContactData();
+            List<ContactData> oldList = new List<ContactData>();
+            if (group.GetContacts().Count == 0)
+            {
+                app.ContactHelper.CreateContactsToNuber(1);
+                contact = ContactData.GetAll().First();
+                oldList = group.GetContacts();
+            }
+            else
+            {
+                oldList = group.GetContacts();                                
+                if (ContactData.GetAll().Count == oldList.Count)
+                {
+                    app.ContactHelper.CreateContactsToNuber(ContactData.GetAll().Count + 1);
+                    contact = ContactData.GetAll().Except(oldList).First();
+                }
+                else
+                contact = ContactData.GetAll().Except(oldList).First();
+            }
+            
+            //List<ContactData> oldList = group.GetContacts();
+            //ContactData contact = ContactData.GetAll().Except(oldList).First();
 
             app.ContactHelper.AddContactToGroup(contact, group);
 
