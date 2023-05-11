@@ -64,22 +64,22 @@ namespace WebAddressbookTests
             return contacts;
         }
 
-        [Test, TestCaseSource("ContactDataFromJsonFile")]
-        public void ContactCreationTest(ContactData contact)
-        {            
-            List<ContactData> oldContacts = app.ContactHelper.GetContactList();
+        //[Test, TestCaseSource("ContactDataFromJsonFile")]
+        //public void ContactCreationTest(ContactData contact)
+        //{            
+        //    List<ContactData> oldContacts = app.ContactHelper.GetContactList();
 
-            app.ContactHelper.Create(contact);
+        //    app.ContactHelper.Create(contact);
 
-            Assert.AreEqual(oldContacts.Count + 1, app.ContactHelper.GetContacCount());
+        //    Assert.AreEqual(oldContacts.Count + 1, app.ContactHelper.GetContacCount());
 
-            List<ContactData> newContacts = app.ContactHelper.GetContactList();
-            oldContacts.Add(contact);
-            oldContacts.Sort();
-            newContacts.Sort();
-            Assert.AreEqual(oldContacts, newContacts);
-            //app.Auth.Logout();
-        }
+        //    List<ContactData> newContacts = app.ContactHelper.GetContactList();
+        //    oldContacts.Add(contact);
+        //    oldContacts.Sort();
+        //    newContacts.Sort();
+        //    Assert.AreEqual(oldContacts, newContacts);
+        //    //app.Auth.Logout();
+        //}
 
         [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void ContactCreationTest2(ContactData contact)

@@ -19,6 +19,7 @@ namespace WebAddressbookTests
         private string allPhones;
         private string allEMails;
         private string allData;
+        //private string id;
 
         public ContactData()
         {
@@ -38,7 +39,7 @@ namespace WebAddressbookTests
             if (Object.ReferenceEquals(this, other))
                 return true;
 
-            return Name == other.Name && LastName == other.LastName;            
+            return Name == other.Name && LastName == other.LastName && id == other.id;            
         }
 
         public override int GetHashCode()

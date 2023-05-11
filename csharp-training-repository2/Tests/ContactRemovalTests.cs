@@ -28,7 +28,7 @@ namespace WebAddressbookTests
             //app.Auth.Logout();
         }
 
-        [Test]
+        [Test, Repeat(10)]
         public void ContactRemovalTest2()
         {
             int contactToDeleteNum = 1;

@@ -23,7 +23,10 @@ namespace WebAddressbookTests
             List<ContactData> oldList = new List<ContactData>();
             if (group.GetContacts().Count == 0)
             {
-                app.ContactHelper.CreateContactsToNuber(1);
+                if(ContactData.GetAll().Count == 0)
+                {
+                    app.ContactHelper.CreateContactsToNuber(1);
+                }
                 contact = ContactData.GetAll().First();
                 oldList = group.GetContacts();
             }
@@ -38,9 +41,6 @@ namespace WebAddressbookTests
                 else
                 contact = ContactData.GetAll().Except(oldList).First();
             }
-            
-            //List<ContactData> oldList = group.GetContacts();
-            //ContactData contact = ContactData.GetAll().Except(oldList).First();
 
             app.ContactHelper.AddContactToGroup(contact, group);
 
@@ -55,9 +55,27 @@ namespace WebAddressbookTests
         [Test]
         public void TestRemoveContactFromGroup()
         {
-            GroupData groupToRemoveFrom = GroupData.GetGroupWithContactsInIt()[0];
+            if (GroupData.GetAll().Count == 0)
+            {
+                app.GroupHelper.CreateGroupsToNuber(1);
+            }
+
+            GroupData groupToRemoveFrom = new GroupData();
+            ContactData contact = new ContactData();
+
+            if (GroupData.GetGroupWithContactsInIt().Count == 0)
+            {
+                groupToRemoveFrom = GroupData.GetAll().First();
+                if (ContactData.GetAll().Count() == 0)
+                {
+                    app.ContactHelper.CreateContactsToNuber(1);
+                }
+                contact = ContactData.GetAll().First();
+                app.ContactHelper.AddContactToGroup(contact, groupToRemoveFrom);
+            }
+            groupToRemoveFrom = GroupData.GetGroupWithContactsInIt().First();
+            contact = groupToRemoveFrom.GetContacts().First();
             List<ContactData> oldList = groupToRemoveFrom.GetContacts();
-            ContactData contact = oldList.First();
 
             app.ContactHelper.RemoveContactFromGroup(contact, groupToRemoveFrom);
 
