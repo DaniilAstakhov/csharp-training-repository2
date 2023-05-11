@@ -6,32 +6,32 @@ namespace WebAddressbookTests
     [TestFixture]
     public class ContactModificationTests : ContactTestBase
     {
-        //[Test]
-        //public void ContactModificationTest()
-        //{
-        //    int contactToModify = 15;
+        [Test]
+        public void ContactModificationTest()
+        {
+            int contactToModify = 15;
 
-        //    ContactData editContact = new ContactData("EditName1", "EditLastName1");            
+            ContactData editContact = new ContactData("EditName1", "EditLastName1");
 
-        //    if (app.ContactHelper.ChekIfContactDoesNotExist(contactToModify))
-        //    {
-        //        app.ContactHelper.CreateContactsToNuber(contactToModify);
-        //    }
+            if (app.ContactHelper.ChekIfContactDoesNotExist(contactToModify))
+            {
+                app.ContactHelper.CreateContactsToNuber(contactToModify);
+            }
 
-        //    List<ContactData> oldContacts = app.ContactHelper.GetContactList();
+            List<ContactData> oldContacts = app.ContactHelper.GetContactList();
 
-        //    app.ContactHelper.ModifyContact(editContact, contactToModify);
+            app.ContactHelper.ModifyContact(editContact, contactToModify);
 
-        //    Assert.AreEqual(oldContacts.Count, app.ContactHelper.GetContacCount());
+            Assert.AreEqual(oldContacts.Count, app.ContactHelper.GetContacCount());
 
-        //    List<ContactData> newContacts = app.ContactHelper.GetContactList();
-        //    oldContacts[contactToModify - 1].Name = editContact.Name;
-        //    oldContacts[contactToModify - 1].LastName = editContact.LastName;
-        //    oldContacts.Sort();
-        //    newContacts.Sort();
-        //    Assert.AreEqual(oldContacts, newContacts);
-        //    //app.Auth.Logout();
-        //}
+            List<ContactData> newContacts = app.ContactHelper.GetContactList();
+            oldContacts[contactToModify - 1].Name = editContact.Name;
+            oldContacts[contactToModify - 1].LastName = editContact.LastName;
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
+            //app.Auth.Logout();
+        }
 
         [Test]
         public void ContactModificationTest2()

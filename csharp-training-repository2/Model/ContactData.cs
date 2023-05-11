@@ -19,7 +19,7 @@ namespace WebAddressbookTests
         private string allPhones;
         private string allEMails;
         private string allData;
-        //private string id;
+        private string id;
 
         public ContactData()
         {
@@ -39,7 +39,7 @@ namespace WebAddressbookTests
             if (Object.ReferenceEquals(this, other))
                 return true;
 
-            return Name == other.Name && LastName == other.LastName && id == other.id;            
+            return Name == other.Name && LastName == other.LastName && Id == other.Id;            
         }
 
         public override int GetHashCode()
@@ -49,7 +49,7 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return "name=" + Name + "|" + "lastname=" + LastName;
+            return "name= " + Name + "|" + "lastname= " + LastName + " | " + "id= " + Id;
         }
 
         public int CompareTo(ContactData other)
@@ -60,6 +60,15 @@ namespace WebAddressbookTests
             int result = Name.CompareTo(other.Name);
             if (result == 0)
                 result = LastName.CompareTo(other.LastName);
+            if (result == 0)
+            {
+                //if(Id == null || Id == "" || other.Id == null || other.Id == "")
+                //{
+                //    return result;
+                //}
+                result = Id.CompareTo(other.Id);
+            }
+                
             return result;
         }
 
@@ -70,7 +79,7 @@ namespace WebAddressbookTests
         public string LastName { get { return lastName; } set { lastName = value; } }
 
         [Column(Name = "id"), PrimaryKey, Identity]
-        public string id { get; set; }
+        public string Id { get; set; }
 
         [Column(Name = "address"), NotNull]
         public string Address { get; set; }

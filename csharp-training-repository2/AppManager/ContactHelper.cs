@@ -38,7 +38,7 @@ namespace WebAddressbookTests
         public void RemoveContact(ContactData contact)
         {
             manager.NavigationHelper.GoToMainPage();
-            SelectContact(contact.id);
+            SelectContact(contact.Id);
             RemoveContactButtonClick();
             manager.NavigationHelper.AcceptAlertWindow();
             manager.NavigationHelper.GoToMainPage();
@@ -85,7 +85,7 @@ namespace WebAddressbookTests
         public void ModifyContact(ContactData editContact, ContactData contact)
         {
             manager.NavigationHelper.GoToMainPage();
-            EditContactButtonClick(contact.id);
+            EditContactButtonClick(contact.Id);
             FillContactForm(editContact);
             UpdateContact();
             manager.NavigationHelper.ReturnToHomePage();
@@ -164,9 +164,16 @@ namespace WebAddressbookTests
                 manager.NavigationHelper.GoToMainPage();
                 ICollection<IWebElement> names = driver.FindElements(By.XPath("//table[@id='maintable']//tr/td[3]"));
                 ICollection<IWebElement> lastNames = driver.FindElements(By.XPath("//table[@id='maintable']//tr/td[2]"));
+                ICollection<IWebElement> ids = driver.FindElements(By.XPath("//table[@id='maintable']//tr//input"));
                 for (int i = 0; i < names.Count; i++)
                 {
-                    contactCache.Add(new ContactData(names.ElementAt(i).Text, lastNames.ElementAt(i).Text));
+                    ContactData contact = new ContactData();
+                    contact.Name = names.ElementAt(i).Text;
+                    contact.LastName = lastNames.ElementAt(i).Text;
+                    contact.Id = ids.ElementAt(i).GetProperty("value");
+
+                    contactCache.Add(contact);
+                    //contactCache.Add(new ContactData(names.ElementAt(i).Text, lastNames.ElementAt(i).Text));
                 }
             }
             return new List<ContactData>(contactCache);
@@ -244,7 +251,7 @@ namespace WebAddressbookTests
         {
             manager.NavigationHelper.GoToMainPage();
             ClearGroupFilter();
-            SelectContactCheckBox(contact.id);
+            SelectContactCheckBox(contact.Id);
             SelectGroupToAdd(group.Name);
             CommitAddingContactToGroup();
             new WebDriverWait(driver, TimeSpan.FromSeconds(10))
@@ -270,7 +277,7 @@ namespace WebAddressbookTests
         {
             manager.NavigationHelper.GoToMainPage();
             SelectGroupInFilter(groupToRemoveFrom);
-            SelectContactCheckBox(contact.id);
+            SelectContactCheckBox(contact.Id);
             CommitRemovingContactFromGroup();
             new WebDriverWait(driver, TimeSpan.FromSeconds(10))
                 .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
