@@ -39,6 +39,10 @@ namespace WebAddressbookTests
             if (Object.ReferenceEquals(this, other))
                 return true;
 
+            if (this.Id == null || this.Id == "" || other.Id == null || other.Id == "")
+            {
+                return Name == other.Name && LastName == other.LastName;
+            }
             return Name == other.Name && LastName == other.LastName && Id == other.Id;            
         }
 
@@ -62,10 +66,10 @@ namespace WebAddressbookTests
                 result = LastName.CompareTo(other.LastName);
             if (result == 0)
             {
-                //if(Id == null || Id == "" || other.Id == null || other.Id == "")
-                //{
-                //    return result;
-                //}
+                if (Id == null || Id == "" || other.Id == null || other.Id == "")
+                {
+                    return result;
+                }
                 result = Id.CompareTo(other.Id);
             }
                 
